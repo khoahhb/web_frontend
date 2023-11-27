@@ -11,11 +11,14 @@ import SignOut from "@mui/icons-material/Logout";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import avatar from '../../assets/images/avatar.png';
 import suitcase from '../../assets/images/suitcase.png';
+import { useSelector } from 'react-redux';
 
 const Item = ({ title, to, icon, selected, setSelected, isCollapsed }) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const itemMargin = isCollapsed ? '16px 0' : '0 0 16px 16px';
+    const userInfo = useSelector((state) => state.auth.userInfo);
+
     return (
         <MenuItem
             active={selected === title}
@@ -41,6 +44,7 @@ const Sidebar = () => {
     const colors = tokens(theme.palette.mode);
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [selected, setSelected] = useState("Manage User");
+    const userInfo = useSelector((state) => state.auth.userInfo);
 
     return (
         <Box
@@ -102,7 +106,7 @@ const Sidebar = () => {
                     <Box paddingLeft={isCollapsed ? undefined : "0%"}>
                         <Item
                             title="Manage User"
-                            to="/"
+                            to="/users"
                             icon={<PeopleOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
@@ -163,18 +167,18 @@ const Sidebar = () => {
                                     fontWeight="bold"
                                     sx={{ m: "10px 0 0 0" }}
                                 >
-                                    Huynh Huu Bao Khoa
+                                    {userInfo.fullname}
                                 </Typography>
                                 <Typography
                                     variant="h5"
                                     color={colors.blueAccent[400]}
                                     sx={{ m: "10px 0 0 0" }}>
-                                    Admin
+                                    {userInfo.userProfile.type}
                                 </Typography>
                                 <Typography
                                     variant="h5"
                                     color={colors.blueAccent[400]} sx={{ m: "10px 0 24px 0" }}>
-                                    2, Chau Thanh, Hau Giang
+                                    {userInfo.address}
                                 </Typography>
                             </Box>
                         </Box>

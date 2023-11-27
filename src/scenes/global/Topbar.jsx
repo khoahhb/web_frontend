@@ -9,7 +9,7 @@ const Topbar = () => {
   const [title, setTitle] = useState('User Mangement')
 
   const titleMap = [
-    { path: '/', title: 'User Mangement' },
+    { path: '/users', title: 'User Mangement' },
     { path: '/avatars', title: 'Avatar Mangement' },
     { path: '/profiles', title: 'Profile Mangement' }
   ]

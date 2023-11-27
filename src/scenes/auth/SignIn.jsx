@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 import { Grid, Paper, TextField, Button, Typography, IconButton, InputAdornment } from '@mui/material';
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import bgImage from '../../assets/images/bg.png';
 import CustomSnackbar from '../../components/CustomSnackbar ';
+import { signIn, getUserData } from '../../services/api';
+import { useDispatch } from 'react-redux';
+import { login } from '../../redux/authSlice';
 
 const paperStyle = {
     padding: 50,
@@ -48,33 +50,31 @@ const textStyle = {
     fontSize: '14px'
 };
 
-const SignIn = () => {
+const SignIn = ({ onSnackbarOpen }) => {
+
+    const dispatch = useDispatch();
     let navigate = useNavigate();
+
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            const token = await signIn(username, password);
+            const userInfo = await getUserData(token);
+            console.log(userInfo)
+            dispatch(login({ token, userInfo }));
+            onSnackbarOpen('Login successful!', 'success');
+            navigate('/users');
+        } catch (error) {
+            onSnackbarOpen('Login failed: ' + error.message, 'error');
+        }
+    };
 
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
-
-    const [snackbarInfo, setSnackbarInfo] = useState({
-        open: false,
-        message: '',
-        severity: 'info',
-    });
-
-    const handleSnackbarOpen = (message, severity) => {
-        setSnackbarInfo({
-            open: true,
-            message: message,
-            severity: severity,
-        });
-    };
-
-    const handleCloseSnackbar = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setSnackbarInfo({ ...snackbarInfo, open: false });
-    };
 
     return (
         <Grid style={gridStyle}>
@@ -95,6 +95,9 @@ const SignIn = () => {
                     label='Username'
                     placeholder='Enter username'
                     style={{ marginBottom: '16px' }}
+                    onChange={(event) => {
+                        setUsername(event.target.value);
+                    }}
                 />
                 <TextField
                     variant="standard"
@@ -120,19 +123,14 @@ const SignIn = () => {
                     label='Password'
                     placeholder='Enter password'
                     style={{ marginBottom: '48px' }}
+                    onChange={(event) => {
+                        setPassword(event.target.value);
+                    }}
                 />
                 <Button type='submit' style={btnstyle} fullWidth={false}
-                    onClick={() => {
-                        navigate('/');
-                    }}>
+                    onClick={handleSubmit}>
                     Sign in
                 </Button>
-                <CustomSnackbar
-                    open={snackbarInfo.open}
-                    onClose={handleCloseSnackbar}
-                    severity={snackbarInfo.severity}
-                    message={snackbarInfo.message}
-                />
                 <Typography style={textStyle} > Do not have account?&nbsp;&nbsp;
                     <Link to="/signup" style={{ color: 'rgba(67, 64, 204, 1)' }}>
                         Sign Up Now

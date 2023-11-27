@@ -1,8 +1,8 @@
-import { Box, Button, Typography, useTheme, IconButton, TextField } from "@mui/material";
+import { Box, Button, Typography, useTheme, IconButton } from "@mui/material";
 import * as React from 'react';
 import { DataGrid } from "@mui/x-data-grid";
-import { tokens } from "../../theme";
-import { mockDataTeam } from "../../data/mockData";
+import { tokens } from "../theme";
+import { mockDataProfiles } from "../data/mockData";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -13,20 +13,12 @@ import AddIcon from "@mui/icons-material/Add";
 import DelIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Pagination from '@mui/material/Pagination';
-import Modal from '@mui/material/Modal';
-import AddUserModel from '../../components/AddUserModel'
 
-const UserManage = () => {
+
+const ProfileManagement = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const columns = [
-    {
-      field: "username",
-      headerName: "Username",
-      headerAlign: "center",
-      align: "center",
-      flex: 1,
-    },
     {
       field: "name",
       headerName: "Name",
@@ -35,14 +27,14 @@ const UserManage = () => {
       cellClassName: "name-column--cell",
     },
     {
-      field: "role",
-      headerName: "Role",
+      field: "type",
+      headerName: "Type",
       headerAlign: "center",
       align: "center",
     },
     {
-      field: "email",
-      headerName: "Email",
+      field: "description",
+      headerName: "Description",
       headerAlign: "center",
       flex: 1,
     },
@@ -81,20 +73,12 @@ const UserManage = () => {
     },
   ];
 
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const [age, setAge] = React.useState('');
 
   const handleChange = (event) => {
     setAge(event.target.value);
   };
+
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center" marginBottom="-20px">
@@ -147,20 +131,11 @@ const UserManage = () => {
               fontWeight: "bold",
               padding: "10px 20px",
             }}
-            onClick={handleClickOpen}
           >
             <AddIcon sx={{ mr: "10px" }} />
-            Add User
+            Add Profile
           </Button>
         </Box>
-        <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-          <AddUserModel/>
-        </Modal>
       </Box>
 
 
@@ -194,7 +169,7 @@ const UserManage = () => {
         }}
       >
         <DataGrid
-          rows={mockDataTeam}
+          rows={mockDataProfiles}
           columns={columns}
           hideFooterPagination={true}
           slotProps={{
@@ -237,4 +212,4 @@ const UserManage = () => {
   );
 };
 
-export default UserManage;
+export default ProfileManagement;

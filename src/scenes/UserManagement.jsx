@@ -1,8 +1,8 @@
-import { Box, Button, Typography, useTheme, IconButton } from "@mui/material";
-import {useState} from 'react';
+import { Box, Button, Typography, useTheme, IconButton, TextField } from "@mui/material";
+import * as React from 'react';
 import { DataGrid } from "@mui/x-data-grid";
-import { tokens } from "../../theme";
-import { mockDataContacts } from "../../data/mockData";
+import { tokens } from "../theme";
+import { mockDataTeam } from "../data/mockData";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -13,12 +13,20 @@ import AddIcon from "@mui/icons-material/Add";
 import DelIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Pagination from '@mui/material/Pagination';
+import Modal from '@mui/material/Modal';
+import AddUserModel from '../components/AddUserModel'
 
-
-const Contacts = () => {
+const UserManagement = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const columns = [
+    {
+      field: "username",
+      headerName: "Username",
+      headerAlign: "center",
+      align: "center",
+      flex: 1,
+    },
     {
       field: "name",
       headerName: "Name",
@@ -27,27 +35,16 @@ const Contacts = () => {
       cellClassName: "name-column--cell",
     },
     {
-      field: "type",
-      headerName: "Type",
+      field: "role",
+      headerName: "Role",
       headerAlign: "center",
       align: "center",
     },
     {
-      field: "size",
-      headerName: "Size (Byte)",
+      field: "email",
+      headerName: "Email",
       headerAlign: "center",
-      align: "center",
       flex: 1,
-    },
-    {
-      field: "isPublished",
-      headerName: "Publish Status",
-      headerAlign: "center",
-      align: "center",
-      flex: 1,
-      renderCell: (params) => {
-        return params.row.isPublished ? "Published" : "Private";
-      },
     },
     {
       field: "createdAt",
@@ -72,6 +69,9 @@ const Contacts = () => {
       renderCell: ({ row: { access } }) => {
         return (
           <Box>
+            <IconButton type="button" sx={{ p: 1, color: colors.blueAccent[500] }}>
+              <EditIcon />
+            </IconButton>
             <IconButton type="button" sx={{ p: 1, color: colors.redAccent[500] }}>
               <DelIcon />
             </IconButton>
@@ -81,27 +81,29 @@ const Contacts = () => {
     },
   ];
 
-  const [mimeType, setMimeType] = useState('');
+  const [open, setOpen] = React.useState(false);
 
-  const [isPublished, setIsPublished] = useState();
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const [age, setAge] = React.useState('');
 
   const handleChange = (event) => {
-    setMimeType(event.target.value);
+    setAge(event.target.value);
   };
-
-  const handlePublishChange = (event) => {
-    setIsPublished(event.target.value);
-  };
-
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center" marginBottom="-20px">
         <Box display="flex" flexGrow={1} gap="18px">
           <FormControl sx={{ minWidth: 120 }}>
-            <InputLabel sx={{ textAlign: 'left', width: '100%' }}>MimeType</InputLabel>
+            <InputLabel sx={{ textAlign: 'left', width: '100%' }}>Role</InputLabel>
             <Select
-              value={mimeType}
-              label="MimeType"
+              value={age}
+              label="Role"
               onChange={handleChange}
               sx={{
                 height: 45,
@@ -117,36 +119,10 @@ const Contacts = () => {
                 }
               }}
             >
-              <MenuItem value={'image/jpeg'}>image/jpeg</MenuItem>
-              <MenuItem value={'image/png'}>image/png</MenuItem>
-              <MenuItem value={'image/gif'}>image/gif</MenuItem>
-              <MenuItem value={'image/webp'}>image/webp</MenuItem>
-              <MenuItem value={'other'}>other</MenuItem>
-            </Select>
-          </FormControl>
-
-          <FormControl sx={{ minWidth: 120 }}>
-            <InputLabel sx={{ textAlign: 'left', width: '100%' }}>Published</InputLabel>
-            <Select
-              value={isPublished}
-              label="Published"
-              onChange={handlePublishChange}
-              sx={{
-                height: 45,
-                backgroundColor: colors.primary[400],
-                '& .MuiOutlinedInput-notchedOutline': {
-                  borderColor: 'transparent',
-                },
-                '&:hover': {
-                  backgroundColor: 'primary.white',
-                },
-                '&.Mui-focused': {
-                  backgroundColor: colors.primary[400],
-                }
-              }}
-            >
-              <MenuItem value={true}>Publish</MenuItem>
-              <MenuItem value={false}>Private</MenuItem>
+              <MenuItem value={'Admin'}>Admin</MenuItem>
+              <MenuItem value={'Teacher'}>Teacher</MenuItem>
+              <MenuItem value={'Student'}>Student</MenuItem>
+              <MenuItem value={'None'}>None</MenuItem>
             </Select>
           </FormControl>
 
@@ -157,11 +133,34 @@ const Contacts = () => {
             marginLeft="18px"
           >
             <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search Name" />
-            <IconButton type="button" sx={{ p: 1}}>
+            <IconButton type="button" sx={{ p: 1 }}>
               <SearchIcon />
             </IconButton>
           </Box>
         </Box>
+        <Box>
+          <Button
+            sx={{
+              backgroundColor: colors.blueAccent[700],
+              color: colors.grey[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+            }}
+            onClick={handleClickOpen}
+          >
+            <AddIcon sx={{ mr: "10px" }} />
+            Add User
+          </Button>
+        </Box>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <AddUserModel />
+        </Modal>
       </Box>
 
 
@@ -194,27 +193,27 @@ const Contacts = () => {
           },
         }}
       >
-        <DataGrid 
-          rows={mockDataContacts} 
-          columns={columns} 
-          hideFooterPagination = {true}
+        <DataGrid
+          rows={mockDataTeam}
+          columns={columns}
+          hideFooterPagination={true}
           slotProps={{
             pagination: {
-                prevIconButtonProps: {
-                    disabled: true,
-                },
-                nextIconButtonProps: {
-                    disabled: true,
-                },
-                SelectProps: {
-                    disabled: true,
-                },
+              prevIconButtonProps: {
+                disabled: true,
+              },
+              nextIconButtonProps: {
+                disabled: true,
+              },
+              SelectProps: {
+                disabled: true,
+              },
             },
-        }} />
+          }} />
         <Box display="flex" justifyContent="center" mt={2}>
-          <Pagination 
-            count={10} 
-            variant="outlined" 
+          <Pagination
+            count={10}
+            variant="outlined"
             shape="rounded"
             sx={{
               "& .MuiPaginationItem-root": {
@@ -238,4 +237,4 @@ const Contacts = () => {
   );
 };
 
-export default Contacts;
+export default UserManagement;

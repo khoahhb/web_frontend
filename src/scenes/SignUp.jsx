@@ -11,7 +11,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const SignUp = () => {
     const paperStyle = {
-        padding: 50,
+        padding: 40,
         height: 'auto',
         width: 500,
         borderRadius: '20px',
@@ -25,7 +25,7 @@ const SignUp = () => {
         color: 'white',
         fontSize: '1rem',
         padding: '8px 70px',
-        marginBottom: '32px',
+        marginBottom: '16px',
         borderRadius: '10px',
     };
     const gridStyle = {
@@ -54,7 +54,7 @@ const SignUp = () => {
     return (
         <Grid style={gridStyle}>
             <Paper elevation={10} style={paperStyle}>
-                <Typography variant="h2" style={{ margin: '20px 20px 0px 20px', color: 'rgba(255, 255, 255, 1)', marginBottom: '24px', }}>    <strong>SIGN UP</strong>
+                <Typography variant="h2" style={{ margin: '0px 8px 0px 0px', color: 'rgba(255, 255, 255, 1)', marginBottom: '16px', }}>    <strong>SIGN UP</strong>
                 </Typography>
                 <TextField
                     variant="standard"
@@ -96,7 +96,7 @@ const SignUp = () => {
                                 InputLabelProps: {
                                     style: { color: 'rgba(255, 255, 255, 1)' }
                                 },
-                                style: { marginBottom: '24px' },
+                                style: { marginBottom: '16px' },
                                 fullWidth: true
                             },
                         }}
@@ -114,7 +114,7 @@ const SignUp = () => {
                     }}
                     label='Email Address'
                     placeholder='Email Address'
-                    style={{ marginBottom: '24px' }}
+                    style={{ marginBottom: '16px' }}
                 />
                 <TextField
                     variant="standard"
@@ -127,7 +127,7 @@ const SignUp = () => {
                     }}
                     label='Street Address'
                     placeholder='Street Address'
-                    style={{ marginBottom: '24px' }}
+                    style={{ marginBottom: '16px' }}
                 />
                 <TextField
                     variant="standard"
@@ -140,7 +140,7 @@ const SignUp = () => {
                     }}
                     label='Phone'
                     placeholder='Phone Number (+84)'
-                    style={{ marginBottom: '24px' }}
+                    style={{ marginBottom: '16px' }}
                 />
                 <TextField
                     variant="standard"

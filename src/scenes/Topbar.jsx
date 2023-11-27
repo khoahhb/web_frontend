@@ -1,7 +1,7 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { useState, useEffect } from "react";
-import { tokens } from "../../theme";
-import { useLocation  } from "react-router-dom";
+import { tokens } from "../theme";
+import { useLocation } from "react-router-dom";
 
 const Topbar = () => {
   const theme = useTheme();
@@ -9,9 +9,9 @@ const Topbar = () => {
   const [title, setTitle] = useState('User Mangement')
 
   const titleMap = [
-    {path: '/', title:'User Mangement'},
-    {path: '/avatars', title:'Avatar Mangement'},
-    {path: '/profiles', title:'Profile Mangement'}
+    { path: '/', title: 'User Mangement' },
+    { path: '/avatars', title: 'Avatar Mangement' },
+    { path: '/profiles', title: 'Profile Mangement' }
   ]
 
   let curLoc = useLocation();
@@ -24,10 +24,10 @@ const Topbar = () => {
     <Box display="flex" justifyContent="space-between" p={2} backgroundColor={colors.primary['main']}>
       <Box
         display="flex"
-        alignItems="center" 
-        justifyContent="center" 
+        alignItems="center"
+        justifyContent="center"
         borderRadius="3px"
-        sx={{ width: '100%', height: '64px' }} 
+        sx={{ width: '100%', height: '64px' }}
       >
         <Typography
           variant="h2"

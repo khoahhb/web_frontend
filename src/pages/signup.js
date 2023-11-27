@@ -1,28 +1,29 @@
 import React from 'react';
 import {
-    Grid, Paper, TextField, Button, Typography, Link, Radio,
-    RadioGroup, FormControlLabel, FormControl, FormLabel, Checkbox
+    Grid, Paper, TextField, Button, Typography,  Radio,
+    RadioGroup, FormControlLabel, FormControl, FormLabel
 } from '@mui/material';
+import { Link } from "react-router-dom";
 import bgImage from '../assets/images/bg.png';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const SignUp = () => {
     const paperStyle = {
-        padding: 70,
+        padding: 50,
         height: 'auto',
-        width: 370,
+        width: 500,
         borderRadius: '20px',
         backgroundColor: 'rgba(54, 62, 91, 0.74)',
-        color: 'rgba(170, 170, 170, 1)',
+        color: 'rgba(255, 255, 255, 1)',
         textAlign: 'center',
         position: 'relative',
     };
     const btnstyle = {
         backgroundColor: 'rgba(67, 64, 204, 1)',
         color: 'white',
+        fontSize: '1rem',
         padding: '8px 70px',
         marginBottom: '32px',
         borderRadius: '10px',
@@ -41,7 +42,8 @@ const SignUp = () => {
     const versionStyle = {
         bottom: '10px',
         right: '10px',
-        color: 'rgba(170, 170, 170, 1)',
+        color: 'rgba(255, 255, 255, 1)',
+        fontSize: '12px'
     };
     const textStyle = {
         color: 'white',
@@ -52,7 +54,7 @@ const SignUp = () => {
     return (
         <Grid style={gridStyle}>
             <Paper elevation={10} style={paperStyle}>
-                <Typography variant="h4" style={{ margin: '20px 20px 0px 20px', color: 'rgba(255, 255, 255, 1)', marginBottom: '24px', }}>    <strong>SIGN UP</strong>
+                <Typography variant="h2" style={{ margin: '20px 20px 0px 20px', color: 'rgba(255, 255, 255, 1)', marginBottom: '24px', }}>    <strong>SIGN UP</strong>
                 </Typography>
                 <TextField
                     variant="standard"
@@ -61,18 +63,18 @@ const SignUp = () => {
                         style: { color: 'white' }
                     }}
                     InputLabelProps={{
-                        style: { color: 'rgba(170, 170, 170, 1)' }
+                        style: { color: 'rgba(255, 255, 255, 1)' }
                     }}
                     label='Fullname'
                     placeholder='Fullname'
                     style={{ marginBottom: '32px' }}
                 />
-                <FormControl fullWidth component="fieldset" style={{ marginBottom: '10px', textAlign: 'left' }}>
-                    <FormLabel component="legend" style={{ color: 'rgba(170, 170, 170, 1)' }}>Gender</FormLabel>
+                <FormControl fullWidth component="fieldset" style={{ marginBottom: '16px', textAlign: 'left' }}>
+                    <FormLabel component="legend" style={{ color: 'rgba(255, 255, 255, 1)' }}>Gender</FormLabel>
                     <RadioGroup
                         sx={{
                             '& .MuiSvgIcon-root': {
-                                color: 'rgba(170, 170, 170, 1)',
+                                color: 'rgba(255, 255, 255, 1)',
                             }
                         }}
                         aria-label="gender" name="gender" style={{ display: 'initial' }}>
@@ -92,9 +94,9 @@ const SignUp = () => {
                                     style: { color: 'white' }
                                 },
                                 InputLabelProps: {
-                                    style: { color: 'rgba(170, 170, 170, 1)' }
+                                    style: { color: 'rgba(255, 255, 255, 1)' }
                                 },
-                                style: { marginBottom: '10px' },
+                                style: { marginBottom: '24px' },
                                 fullWidth: true
                             },
                         }}
@@ -108,11 +110,11 @@ const SignUp = () => {
                         style: { color: 'white' }
                     }}
                     InputLabelProps={{
-                        style: { color: 'rgba(170, 170, 170, 1)' },
+                        style: { color: 'rgba(255, 255, 255, 1)' },
                     }}
                     label='Email Address'
                     placeholder='Email Address'
-                    style={{ marginBottom: '10px' }}
+                    style={{ marginBottom: '24px' }}
                 />
                 <TextField
                     variant="standard"
@@ -121,11 +123,11 @@ const SignUp = () => {
                         style: { color: 'white' }
                     }}
                     InputLabelProps={{
-                        style: { color: 'rgba(170, 170, 170, 1)' }
+                        style: { color: 'rgba(255, 255, 255, 1)' }
                     }}
                     label='Street Address'
                     placeholder='Street Address'
-                    style={{ marginBottom: '10px' }}
+                    style={{ marginBottom: '24px' }}
                 />
                 <TextField
                     variant="standard"
@@ -134,11 +136,11 @@ const SignUp = () => {
                         style: { color: 'white' }
                     }}
                     InputLabelProps={{
-                        style: { color: 'rgba(170, 170, 170, 1)' }
+                        style: { color: 'rgba(255, 255, 255, 1)' }
                     }}
                     label='Phone'
                     placeholder='Phone Number (+84)'
-                    style={{ marginBottom: '10px' }}
+                    style={{ marginBottom: '24px' }}
                 />
                 <TextField
                     variant="standard"
@@ -147,7 +149,7 @@ const SignUp = () => {
                         style: { color: 'white' }
                     }}
                     InputLabelProps={{
-                        style: { color: 'rgba(170, 170, 170, 1)' }
+                        style: { color: 'rgba(255, 255, 255, 1)' }
                     }}
                     label='Password'
                     placeholder='Enter password'
@@ -157,7 +159,7 @@ const SignUp = () => {
                 <Button type='submit' style={btnstyle} fullWidth={false}>Sign Up</Button>
                 <Typography style={textStyle}>
                     Already have an Account?&nbsp;&nbsp;
-                    <Link href="#" style={{ color: 'limegreen' }}>
+                    <Link to="/signin" style={{ color: 'limegreen' }}>
                         Sign In Now
                     </Link>
                 </Typography>

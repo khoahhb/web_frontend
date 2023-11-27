@@ -3,15 +3,15 @@ import './App.css';
 import SignIn from './pages/signin'
 import SignUp from './pages/signup'
 import { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation  } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
-import Team from "./scenes/team";
+import UserManage from "./scenes/user";
 import Invoices from "./scenes/invoices";
-import Contacts from "./scenes/contacts";
+import AvatarManage from "./scenes/avatar";
 import Bar from "./scenes/bar";
-import Form from "./scenes/form";
+import ProfileManage from "./scenes/profile";
 import Line from "./scenes/line";
 import Pie from "./scenes/pie";
 import FAQ from "./scenes/faq";
@@ -25,20 +25,24 @@ function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
 
+  const location = useLocation();
+  const isAuthPage = location.pathname === '/signin' || location.pathname === '/signup';
+
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          <Sidebar isSidebar={isSidebar} />
-          <main className="content">
-            <Topbar setIsSidebar={setIsSidebar} />
+          {!isAuthPage && <Sidebar isSidebar={isSidebar} />} 
+          <main className={isAuthPage ? "fullWidthContent" : "content"}>
+            {!isAuthPage && <Topbar setIsSidebar={setIsSidebar} />} 
             <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/team" element={<Team />} />
-              <Route path="/contacts" element={<Contacts />} />
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/" element={<UserManage />} />
+              <Route path="/avatars" element={<AvatarManage />} />
+              <Route path="/profiles" element={<ProfileManage />} />
               <Route path="/invoices" element={<Invoices />} />
-              <Route path="/form" element={<Form />} />
               <Route path="/bar" element={<Bar />} />
               <Route path="/pie" element={<Pie />} />
               <Route path="/line" element={<Line />} />
@@ -52,5 +56,6 @@ function App() {
     </ColorModeContext.Provider>
   );
 }
+
 
 export default App;

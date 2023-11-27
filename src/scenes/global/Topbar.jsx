@@ -1,54 +1,45 @@
-import { Box, IconButton, useTheme } from "@mui/material";
-import { useContext } from "react";
-import { ColorModeContext, tokens } from "../../theme";
-import InputBase from "@mui/material/InputBase";
-import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
-import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
-import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import SearchIcon from "@mui/icons-material/Search";
+import { Box, Typography, useTheme } from "@mui/material";
+import { useState, useEffect } from "react";
+import { tokens } from "../../theme";
+import { useLocation  } from "react-router-dom";
 
 const Topbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const colorMode = useContext(ColorModeContext);
+  const [title, setTitle] = useState('User Mangement')
+
+  const titleMap = [
+    {path: '/', title:'User Mangement'},
+    {path: '/avatars', title:'Avatar Mangement'},
+    {path: '/profiles', title:'Profile Mangement'}
+  ]
+
+  let curLoc = useLocation();
+  useEffect(() => {
+    const curTitle = titleMap.find(item => item.path === curLoc.pathname)
+    setTitle(curTitle.title)
+  }, [curLoc])
 
   return (
-    <Box display="flex" justifyContent="space-between" p={2}>
-      {/* SEARCH BAR */}
+    <Box display="flex" justifyContent="space-between" p={2} backgroundColor={colors.primary['main']}>
       <Box
         display="flex"
-        backgroundColor={colors.primary[400]}
+        alignItems="center" 
+        justifyContent="center" 
         borderRadius="3px"
+        sx={{ width: '100%', height: '64px' }} 
       >
-        <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" />
-        <IconButton type="button" sx={{ p: 1 }}>
-          <SearchIcon />
-        </IconButton>
-      </Box>
-
-      {/* ICONS */}
-      <Box display="flex">
-        <IconButton onClick={colorMode.toggleColorMode}>
-          {theme.palette.mode === "dark" ? (
-            <DarkModeOutlinedIcon />
-          ) : (
-            <LightModeOutlinedIcon />
-          )}
-        </IconButton>
-        <IconButton>
-          <NotificationsOutlinedIcon />
-        </IconButton>
-        <IconButton>
-          <SettingsOutlinedIcon />
-        </IconButton>
-        <IconButton>
-          <PersonOutlinedIcon />
-        </IconButton>
+        <Typography
+          variant="h2"
+          color={colors.grey[100]}
+          fontWeight="bold"
+        >
+          {title}
+        </Typography>
       </Box>
     </Box>
   );
 };
 
 export default Topbar;
+

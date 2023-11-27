@@ -1,13 +1,8 @@
 import React from 'react';
 import {
-    Grid, Paper, TextField, Button, Typography, Radio,
-    RadioGroup, FormControlLabel, FormControl, FormLabel
+    Grid, Paper, TextField, Typography, Divider
 } from '@mui/material';
-import { Link } from "react-router-dom";
-import bgImage from '../assets/images/bg.png';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 
 const AddUserModel = () => {
     const paperStyle = {
@@ -35,34 +30,36 @@ const AddUserModel = () => {
             </Typography>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
-                <TextField
-                    variant="standard"
-                    fullWidth
-                    InputProps={{
-                        style: { color: 'white' }
-                    }}
-                    InputLabelProps={{
-                        style: { color: 'rgba(170, 170, 170, 1)' }
-                    }}
-                    label='Username'
-                    placeholder='Enter username'
-                    style={{ marginBottom: '16px' }}
-                />
+                    <TextField
+                        variant="standard"
+                        fullWidth
+                        InputProps={{
+                            style: { color: 'white' }
+                        }}
+                        InputLabelProps={{
+                            style: { color: 'rgba(170, 170, 170, 1)' }
+                        }}
+                        label='Username'
+                        placeholder='Enter username'
+                        style={{ marginBottom: '16px' }}
+                    />
                 </Grid>
+                <Divider orientation="vertical" flexItem />
+
                 <Grid item xs={12} sm={6}>
-                <TextField
-                    variant="standard"
-                    fullWidth
-                    InputProps={{
-                        style: { color: 'white' }
-                    }}
-                    InputLabelProps={{
-                        style: { color: 'rgba(170, 170, 170, 1)' }
-                    }}
-                    label='Username'
-                    placeholder='Enter username'
-                    style={{ marginBottom: '16px' }}
-                />
+                    <TextField
+                        variant="standard"
+                        fullWidth
+                        InputProps={{
+                            style: { color: 'white' }
+                        }}
+                        InputLabelProps={{
+                            style: { color: 'rgba(170, 170, 170, 1)' }
+                        }}
+                        label='Username'
+                        placeholder='Enter username'
+                        style={{ marginBottom: '16px' }}
+                    />
                 </Grid>
             </Grid>
         </Paper>

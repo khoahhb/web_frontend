@@ -1,7 +1,7 @@
 import { Box, Button, Typography, useTheme, IconButton } from "@mui/material";
 import { useState } from 'react';
 import { DataGrid } from "@mui/x-data-grid";
-import { tokens } from "../theme";
+import { tokens } from "../constants/theme";
 import { mockDataContacts } from "../data/mockData";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';

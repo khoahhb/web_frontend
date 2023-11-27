@@ -1,10 +1,10 @@
 import React from 'react';
 import {
-    Grid, Paper, TextField, Button, Typography,  Radio,
+    Grid, Paper, TextField, Button, Typography, Radio,
     RadioGroup, FormControlLabel, FormControl, FormLabel
 } from '@mui/material';
 import { Link } from "react-router-dom";
-import bgImage from '../assets/images/bg.png';
+import bgImage from '../../assets/images/bg.png';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';

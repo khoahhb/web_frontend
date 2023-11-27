@@ -3,14 +3,14 @@ import { useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
-import { tokens } from "../theme";
+import { tokens } from "../../constants/theme";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import SignOut from "@mui/icons-material/Logout";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import avatar from '../assets/images/avatar.png';
-import suitcase from '../assets/images/suitcase.png';
+import avatar from '../../assets/images/avatar.png';
+import suitcase from '../../assets/images/suitcase.png';
 
 const Item = ({ title, to, icon, selected, setSelected, isCollapsed }) => {
     const theme = useTheme();
@@ -150,8 +150,8 @@ const Sidebar = () => {
                             <Box display="flex" justifyContent="center" alignItems="center">
                                 <img
                                     alt="profile-user"
-                                    width="150px"
-                                    height="150px"
+                                    width="140px"
+                                    height="140px"
                                     src={avatar}
                                     style={{ cursor: "pointer", borderRadius: "50%" }}
                                 />

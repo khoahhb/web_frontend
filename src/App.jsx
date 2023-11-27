@@ -2,11 +2,11 @@ import './App.css';
 import { useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { ColorModeContext, useMode } from "./theme";
-import SignIn from './scenes/SignIn'
-import SignUp from './scenes/SignUp'
-import Topbar from "./scenes/Topbar";
-import Sidebar from "./scenes/Sidebar";
+import { ColorModeContext, useMode } from "./constants/theme";
+import SignIn from './scenes/auth/SignIn'
+import SignUp from './scenes/auth/SignUp'
+import Topbar from "./scenes/global/Topbar";
+import Sidebar from "./scenes/global/Sidebar";
 import UserManage from "./scenes/UserManagement";
 import AvatarManage from "./scenes/AvatarManagement";
 import ProfileManage from "./scenes/ProfileManagement";

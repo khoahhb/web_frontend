@@ -1,6 +1,6 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { useState, useEffect } from "react";
-import { tokens } from "../theme";
+import { tokens } from "../../constants/theme";
 import { useLocation } from "react-router-dom";
 
 const Topbar = () => {

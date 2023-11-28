@@ -1,4 +1,4 @@
-import { Box, Button, Typography, useTheme, IconButton } from "@mui/material";
+import { Box, useTheme, IconButton } from "@mui/material";
 import { useState } from 'react';
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../constants/theme";
@@ -6,7 +6,7 @@ import { mockDataContacts } from "../data/mockData";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import DelIcon from "@mui/icons-material/Delete";

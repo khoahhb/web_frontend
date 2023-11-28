@@ -8,16 +8,18 @@ const Topbar = () => {
   const colors = tokens(theme.palette.mode);
   const [title, setTitle] = useState('User Mangement')
 
-  const titleMap = [
-    { path: '/users', title: 'User Mangement' },
-    { path: '/avatars', title: 'Avatar Mangement' },
-    { path: '/profiles', title: 'Profile Mangement' }
-  ]
-
   let curLoc = useLocation();
   useEffect(() => {
-    const curTitle = titleMap.find(item => item.path === curLoc.pathname)
-    setTitle(curTitle.title)
+    if(curLoc.pathname !== "/")
+    {
+      const titleMap = [
+        { path: '/users', title: 'User Mangement' },
+        { path: '/avatars', title: 'Avatar Mangement' },
+        { path: '/profiles', title: 'Profile Mangement' }
+      ]
+      const curTitle = titleMap.find(item => item.path === curLoc.pathname)
+      setTitle(curTitle.title)
+    }
   }, [curLoc])
 
   return (

@@ -1,7 +1,7 @@
 import "react-pro-sidebar/dist/css/styles.css";
 import { useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Button, Typography, useTheme, Checkbox } from "@mui/material";
 import { Link } from "react-router-dom";
 import { tokens } from "../../constants/theme";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
@@ -12,12 +12,14 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import avatar from '../../assets/images/avatar.png';
 import suitcase from '../../assets/images/suitcase.png';
 import { useSelector } from 'react-redux';
+import { signOut } from '../../services/api';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../redux/authSlice';
 
-const Item = ({ title, to, icon, selected, setSelected, isCollapsed }) => {
+const Item = ({ title, to, icon, selected, setSelected, isCollapsed, image }) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const itemMargin = isCollapsed ? '16px 0' : '0 0 16px 16px';
-    const userInfo = useSelector((state) => state.auth.userInfo);
 
     return (
         <MenuItem
@@ -27,24 +29,63 @@ const Item = ({ title, to, icon, selected, setSelected, isCollapsed }) => {
                 margin: itemMargin,
             }}
             onClick={() => setSelected(title)}
-            icon={icon}
-        >
-            <Typography
-                style={{
-                    fontSize: '1rem',
-                }}>
-                {title}</Typography>
-            <Link to={to} />
+            icon={icon}>
+            {image == null ?
+                <Typography
+                    style={{
+                        fontSize: '1rem',
+                    }}>
+                    {title}
+                </Typography>
+                :
+                <Box
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    width="150px"
+                    height="150px"
+                    sx={{
+                        cursor: 'pointer',
+                        borderRadius: '50%',
+                        overflow: 'hidden',
+                        '&:hover, &.selected': {
+                            bgcolor: '#6870fa',
+                        },
+                        ...(selected === title && {
+                            bgcolor: '#6870fa',
+                        }),
+                    }}>
+                    <img
+                        alt="profile-user"
+                        width="140px"
+                        height="140px"
+                        src={image}
+                        style={{ cursor: "pointer", borderRadius: "50%" }}
+                    />
+                </Box>
+            }
+            <Link to={to}/>
         </MenuItem>
     );
 };
 
-const Sidebar = () => {
+const Sidebar = ({ onSnackbarOpen }) => {
+
+    const dispatch = useDispatch();
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [selected, setSelected] = useState("Manage User");
     const userInfo = useSelector((state) => state.auth.userInfo);
+    const token = useSelector((state) => state.auth.token);
+
+    const handleSignOut = async (event) => {
+        const message = await signOut(token);
+        dispatch(logout());
+        onSnackbarOpen(message, 'success');
+        setSelected("Sign Out")
+    };
+
 
     return (
         <Box
@@ -133,9 +174,7 @@ const Sidebar = () => {
                             to="/signin"
                             icon={<SignOut />}
                             selected={selected}
-                            setSelected={() => {
-                                setSelected("Sign Out")
-                            }}
+                            setSelected={handleSignOut}
                             isCollapsed={isCollapsed}
                         />
                     </Box>
@@ -150,16 +189,17 @@ const Sidebar = () => {
                                 p: '20px',
                                 backgroundColor: colors.primary['main'],
                             }}
+
                         >
-                            <Box display="flex" justifyContent="center" alignItems="center">
-                                <img
-                                    alt="profile-user"
-                                    width="140px"
-                                    height="140px"
-                                    src={avatar}
-                                    style={{ cursor: "pointer", borderRadius: "50%" }}
-                                />
-                            </Box>
+                            <Item
+                                title="User Information"
+                                to="/users"
+                                selected={selected}
+                                setSelected={setSelected}
+                                isCollapsed={isCollapsed}
+                                image={avatar}
+                            />
+
                             <Box textAlign="center">
                                 <Typography
                                     variant="h4"
@@ -167,23 +207,22 @@ const Sidebar = () => {
                                     fontWeight="bold"
                                     sx={{ m: "10px 0 0 0" }}
                                 >
-                                    {userInfo.fullname}
+                                    {userInfo?.fullname || ''}
                                 </Typography>
                                 <Typography
                                     variant="h5"
                                     color={colors.blueAccent[400]}
                                     sx={{ m: "10px 0 0 0" }}>
-                                    {userInfo.userProfile.type}
+                                    {userInfo?.userProfile?.type || ''}
                                 </Typography>
                                 <Typography
                                     variant="h5"
                                     color={colors.blueAccent[400]} sx={{ m: "10px 0 24px 0" }}>
-                                    {userInfo.address}
+                                    {userInfo?.address || ''}
                                 </Typography>
                             </Box>
                         </Box>
                     )}
-
                 </Menu>
             </ProSidebar>
         </Box>

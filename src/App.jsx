@@ -1,6 +1,7 @@
 import './App.css';
-import { useState } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import React, { useState } from 'react';
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { useSelector } from 'react-redux';
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./constants/theme";
 import SignIn from './scenes/auth/SignIn'
@@ -10,14 +11,17 @@ import Sidebar from "./scenes/global/Sidebar";
 import UserManage from "./scenes/UserManagement";
 import AvatarManage from "./scenes/AvatarManagement";
 import ProfileManage from "./scenes/ProfileManagement";
-import CustomSnackbar from './components/CustomSnackbar ';
+import CustomSnackbar from "./components/CustomSnackbar ";
+import ProtectedRoute from "./routing/ProtectedRoute"
+
 
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
 
   const location = useLocation();
-  const isAuthPage = location.pathname === '/signin' || location.pathname === '/signup' || location.pathname === '/';
+  const isAuthPage = location.pathname === '/signin' || location.pathname === '/signup';
+  const { token } = useSelector((state) => state.auth);
 
   const [snackbarInfo, setSnackbarInfo] = useState({
     open: false,
@@ -40,21 +44,22 @@ function App() {
     setSnackbarInfo({ ...snackbarInfo, open: false });
   };
 
+
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          {!isAuthPage && <Sidebar isSidebar={isSidebar} />}
+          {!isAuthPage && <Sidebar isSidebar={isSidebar} onSnackbarOpen={handleSnackbarOpen}/>}
           <main className={isAuthPage ? "fullWidthContent" : "content"}>
             {!isAuthPage && <Topbar setIsSidebar={setIsSidebar} />}
             <Routes>
-              <Route path="/" element={<SignIn onSnackbarOpen={handleSnackbarOpen} />} />
+              <Route path="/" element={<Navigate to={token ? "/users" : "/signin"} replace />} />
               <Route path="/signin" element={<SignIn onSnackbarOpen={handleSnackbarOpen} />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/users" element={<UserManage />} />
-              <Route path="/avatars" element={<AvatarManage />} />
-              <Route path="/profiles" element={<ProfileManage />} />
+              <Route path="/signup" element={<SignUp onSnackbarOpen={handleSnackbarOpen}/>} />
+              <Route path="/users" element={<ProtectedRoute><UserManage/></ProtectedRoute>} />
+              <Route path="/avatars" element={<ProtectedRoute><AvatarManage/></ProtectedRoute>} />
+              <Route path="/profiles" element={<ProtectedRoute><ProfileManage/></ProtectedRoute>} />
             </Routes>
             <CustomSnackbar
               open={snackbarInfo.open}

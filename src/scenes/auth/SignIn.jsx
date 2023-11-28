@@ -4,7 +4,6 @@ import { Grid, Paper, TextField, Button, Typography, IconButton, InputAdornment 
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import bgImage from '../../assets/images/bg.png';
-import CustomSnackbar from '../../components/CustomSnackbar ';
 import { signIn, getUserData } from '../../services/api';
 import { useDispatch } from 'react-redux';
 import { login } from '../../redux/authSlice';

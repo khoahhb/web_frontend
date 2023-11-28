@@ -67,6 +67,7 @@ const SignIn = ({ onSnackbarOpen }) => {
             onSnackbarOpen('Login successful!', 'success');
             navigate('/users');
         } catch (error) {
+            console.log(error)
             onSnackbarOpen('Login failed: ' + error.message, 'error');
         }
     };

@@ -16,7 +16,7 @@ import Pagination from '@mui/material/Pagination';
 import Modal from '@mui/material/Modal';
 import AddUserModel from '../components/AddUserModel'
 
-const UserManagement = () => {
+const UserManagement = ({ onSnackbarOpen }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const columns = [
@@ -159,7 +159,9 @@ const UserManagement = () => {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <AddUserModel />
+          <AddUserModel onSnackbarOpen={(message, severity) => {
+            onSnackbarOpen(message, severity)
+          }} />
         </Modal>
       </Box>
 

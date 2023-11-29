@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {
     Grid, Paper, TextField, Button, Typography, Radio, Divider,
-    RadioGroup, FormControlLabel, FormControl, FormLabel, IconButton, InputAdornment
+    RadioGroup, FormControlLabel, FormControl, FormLabel, IconButton, InputAdornment, Box
 } from '@mui/material';
 import { Link, useNavigate } from "react-router-dom";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -10,6 +10,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import avatar from '../assets/images/test.jpg';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { createUser } from '../services/api';
 
 const paperStyle = {
     height: 'auto',
@@ -20,7 +22,7 @@ const paperStyle = {
     top: '50%',
     left: '50%',
     borderRadius: '20px',
-    backgroundColor: 'rgba(30, 31, 37, 0.9)',
+    backgroundColor: 'rgba(30, 31, 37, 1)',
     color: 'rgba(255, 255, 255, 1)',
     textAlign: 'center',
 };
@@ -39,7 +41,7 @@ const btnstyle = {
     borderRadius: '10px',
 };
 
-const AddUserModel = () => {
+const AddUserModel = ({ onSnackbarOpen }) => {
 
     const [showPassword, setShowPassword] = useState(false);
     const [fullName, setFullName] = useState('');
@@ -50,6 +52,8 @@ const AddUserModel = () => {
     const [address, setAddress] = useState('');
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
+    const [avatarId, setAvatarId] = useState('');
+    const [avatarURI, setAvatarURI] = useState('logo192.png');
 
     const handleGenderChange = (event) => {
         setGender(event.target.value);
@@ -57,6 +61,28 @@ const AddUserModel = () => {
 
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
+
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            const data = {
+                username,
+                password,
+                fullname: fullName,
+                gender,
+                dateOfBirth: selectedDate ? selectedDate.format("DD/MM/YYYY") : '',
+                phone,
+                email,
+                address
+            };
+            await createUser(data);
+            onSnackbarOpen(`Create ${username} success`, 'success');
+        } catch (error) {
+            onSnackbarOpen('Create failed: ' + error.message, 'error');
+            console.log(error.message)
+        }
+    };
 
     return (
         <Paper elevation={10} style={paperStyle}>
@@ -166,11 +192,44 @@ const AddUserModel = () => {
 
 
                     <Grid item xs={5} sm={5} container direction="column" spacing={1} justify="center" alignItems="left" style={{ padding: '32px 0px 0px 48px' }}>
-                        <img
-                            alt="profile-user"
-                            src={avatar}
-                            style={{ width: "100px", height: "100px", borderRadius: "20%", margin: "0px" }}
-                        />
+                        {avatarId ? (
+                            <img
+                                alt="profile-user"
+                                src={avatarURI}
+                                style={{ width: "100px", height: "100px", borderRadius: "20%", margin: "0px" }}
+                            />
+                        ) : (
+                            <div style={{ display: "flex", alignItems: "center" }}>
+                                <Box
+                                    style={{
+                                        width: "100px",
+                                        height: "100px",
+                                        borderRadius: "20%",
+                                        margin: "0px",
+                                        border: "1px solid white",
+                                        background: "transparent",
+                                        color: "white",
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center"
+                                    }}
+                                >
+                                    Empty
+                                </Box>
+
+                                <Button
+                                    variant="outlined"
+                                    startIcon={<CloudUploadIcon />}
+                                    style={{
+                                        marginLeft: "10px",
+                                        borderColor: "#90ee90",
+                                        color: "#90ee90",
+                                    }}
+                                >
+                                    Pick
+                                </Button>
+                            </div>
+                        )}
                         <TextField
                             variant="standard"
                             fullWidth
@@ -182,7 +241,7 @@ const AddUserModel = () => {
                             }}
                             label='Street Address'
                             placeholder='Street Address'
-                            style={{ marginBottom: '14px', width: '250px' }}
+                            style={{ marginBottom: '14px', marginTop: '14px', width: '250px' }}
                             onChange={(event) => {
                                 setAddress(event.target.value);
                             }}
@@ -235,7 +294,8 @@ const AddUserModel = () => {
                 </Grid>
                 <Grid item xs={12} style={{ padding: '0px 0px 0px 0px', marginTop: "24px", marginBottom: "0px" }}>
                     <Button type='submit' style={btnstyle}
-                        fullWidth={false} >Add</Button>
+                        fullWidth={false}
+                        onClick={handleSubmit}>Add</Button>
                 </Grid>
             </Grid>
         </Paper>

@@ -180,7 +180,7 @@ const Sidebar = ({ onSnackbarOpen }) => {
                     </Box>
 
                     {!isCollapsed && (
-                        <Box mb="25px"
+                        <Box mb="0px"
                             sx={{
                                 position: 'absolute',
                                 bottom: 0,
@@ -217,7 +217,7 @@ const Sidebar = ({ onSnackbarOpen }) => {
                                 </Typography>
                                 <Typography
                                     variant="h5"
-                                    color={colors.blueAccent[400]} sx={{ m: "10px 0 24px 0" }}>
+                                    color={colors.blueAccent[400]} sx={{ m: "10px 0 14px 0" }}>
                                     {userInfo?.address || ''}
                                 </Typography>
                             </Box>

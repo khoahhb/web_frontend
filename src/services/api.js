@@ -26,6 +26,15 @@ const signUp = async (userData) => {
     return response.data;
 };
 
+const createUser = async (token, userData) => {
+    const response = await api.post('/user', userData, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+    return response.data;
+};
+
 const getUserData = async (token) => {
     const response = await api.post('/auth', {}, {
         headers: {
@@ -35,4 +44,4 @@ const getUserData = async (token) => {
     return response.data;
 };
 
-export { signIn, signOut, signUp, getUserData };
+export { signIn, signOut, signUp, getUserData, createUser };

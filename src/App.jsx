@@ -50,16 +50,16 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          {!isAuthPage && <Sidebar isSidebar={isSidebar} onSnackbarOpen={handleSnackbarOpen}/>}
+          {!isAuthPage && <Sidebar isSidebar={isSidebar} onSnackbarOpen={handleSnackbarOpen} />}
           <main className={isAuthPage ? "fullWidthContent" : "content"}>
             {!isAuthPage && <Topbar setIsSidebar={setIsSidebar} />}
             <Routes>
               <Route path="/" element={<Navigate to={token ? "/users" : "/signin"} replace />} />
               <Route path="/signin" element={<SignIn onSnackbarOpen={handleSnackbarOpen} />} />
-              <Route path="/signup" element={<SignUp onSnackbarOpen={handleSnackbarOpen}/>} />
-              <Route path="/users" element={<ProtectedRoute><UserManage/></ProtectedRoute>} />
-              <Route path="/avatars" element={<ProtectedRoute><AvatarManage/></ProtectedRoute>} />
-              <Route path="/profiles" element={<ProtectedRoute><ProfileManage/></ProtectedRoute>} />
+              <Route path="/signup" element={<SignUp onSnackbarOpen={handleSnackbarOpen} />} />
+              <Route path="/users" element={<ProtectedRoute><UserManage onSnackbarOpen={handleSnackbarOpen} /></ProtectedRoute>} />
+              <Route path="/avatars" element={<ProtectedRoute><AvatarManage /></ProtectedRoute>} />
+              <Route path="/profiles" element={<ProtectedRoute><ProfileManage /></ProtectedRoute>} />
             </Routes>
             <CustomSnackbar
               open={snackbarInfo.open}

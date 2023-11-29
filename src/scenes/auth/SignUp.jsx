@@ -3,7 +3,7 @@ import {
     Grid, Paper, TextField, Button, Typography, Radio,
     RadioGroup, FormControlLabel, FormControl, FormLabel, IconButton, InputAdornment
 } from '@mui/material';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import bgImage from '../../assets/images/bg.png';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -11,7 +11,6 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { signUp } from '../../services/api';
-import { useDispatch } from 'react-redux';
 
 const paperStyle = {
     padding: 40,
@@ -55,9 +54,6 @@ const textStyle = {
 };
 
 const SignUp = ({ onSnackbarOpen }) => {
-
-    const dispatch = useDispatch();
-    let navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
     const [fullName, setFullName] = useState('');
@@ -145,8 +141,8 @@ const SignUp = ({ onSnackbarOpen }) => {
                         }}
                         aria-label="gender"
                         name="gender"
-                        value={gender} 
-                        onChange={handleGenderChange} 
+                        value={gender}
+                        onChange={handleGenderChange}
                     >
                         <FormControlLabel value="Female" control={<Radio />} label="Female" />
                         <FormControlLabel value="Male" control={<Radio />} label="Male" />
@@ -251,7 +247,9 @@ const SignUp = ({ onSnackbarOpen }) => {
                         setPassword(event.target.value);
                     }}
                 />
-                <Button type='submit' style={btnstyle} fullWidth={false} onClick={handleSubmit}>Sign Up</Button>
+                <Button type='submit' 
+                    style={btnstyle} fullWidth={false} 
+                    onClick={handleSubmit}>Sign Up</Button>
                 <Typography style={textStyle}>
                     Already have an Account?&nbsp;&nbsp;
                     <Link to="/signin" style={{ color: 'limegreen' }}>
